@@ -1,0 +1,36 @@
+{% load crispy_forms_tags %}
+{% block crispy %}
+
+<div class="row">
+    <div class="col-md-6">
+        <form{% if form.id %} id="{{ form.id }}"{% endif %} class="uniForm form-horizontal" method="{{ form.method|default:'post' }}"{% if form.action %} action="{{ form.action }}"{% endif %}>
+            {% if form.token %}
+                {{ form.token }}
+            {% endif %}
+            {% if form|has_autofocus %}
+                {{ form|form_show_errors:"form-control is-invalid"|form_show_labels:"col-form-label col-form-label-lg"|form_show_field }}
+            {% else %}
+                {{ form|form_show_errors:"form-control is-invalid"|form_show_labels:"col-form-label col-form-label-lg"|form_show_field }}
+            {% endif %}
+            {% if form.helper %}
+                {% with form.helper as helper %}
+                    {% if helper.form_show_errors %}
+                        {{ form|form_show_errors:"form-control is-invalid"|form_show_labels:"col-form-label col-form-label-lg"|form_show_field }}
+                    {% else %}
+                        {{ form|form_show_labels:"col-form-label col-form-label-lg"|form_show_field }}
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
+            <div class="form-group">
+                <div class="offset-md-2 col-md-10">
+                    <div class="form-actions">
+                        <button class="btn btn-primary" name="save" type="submit">Save</button>
+                        <a class="btn" href="{% url 'cancel' %}">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
